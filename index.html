@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login System</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Linking to the CSS file -->
+</head>
+<body>
+
+    <!-- Login Page -->
+    <div class="container" id="loginPage">
+        <form id="loginForm">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p class="message">Not registered? <a href="javascript:void(0)" id="createAccountLink">Create an account</a></p>
+            <p id="error-message">Wrong username or password.</p>
+        </form>
+    </div>
+
+    <!-- Create Account Page -->
+    <div class="container" id="createAccountPage" style="display: none;">
+        <form id="createAccountForm">
+            <h2>Create an Account</h2>
+            <div class="input-group">
+                <label for="new-username">Username</label>
+                <input type="text" id="new-username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="new-password">Password</label>
+                <input type="password" id="new-password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="re-enter-password">Re-enter Password</label>
+                <input type="password" id="re-enter-password" name="re-enter-password" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+
+    <!-- Welcome Page -->
+    <div class="container" id="welcomePage" style="display: none;">
+        <h2>Welcome, <span id="username-placeholder"></span>!</h2>
+        <p>You have successfully logged in.</p>
+    </div>
+
+    <script src="script.js"></script> <!-- Linking to the JavaScript file -->
+</body>
+</html>
