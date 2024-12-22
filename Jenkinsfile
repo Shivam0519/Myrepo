@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     // Run the container in detached mode
-                    sh 'docker run -d --name my-static-website-container -p 8080:80 my-static-website'
+                    sh 'docker run -d --name my-static-website-container -p 8081:80 my-static-website'
                 }
             }
         }
