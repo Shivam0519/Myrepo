@@ -27,4 +27,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY testwebsite.py /app/
 
 # Command to run Selenium tests
-CMD ["python", "testwebsite.py"]
+CMD ["python3", "testwebsite.py"]
