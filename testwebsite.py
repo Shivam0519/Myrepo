@@ -11,7 +11,7 @@ from selenium.common.exceptions import TimeoutException, ElementNotInteractableE
 def driver():
     # Create Edge driver without specifying path, assuming it's in your PATH environment variable
     driver = webdriver.Edge()  # Use webdriver.Edge() for Edge
-    driver.get("file:///C:/Users/ssing397/OneDrive%20-%20Capgemini/Desktop/index.html")  # Update with your file or URL
+    driver.get("driver.get("http://localhost:8081")  # Update with your file or URL
     yield driver
     driver.implicitly_wait(10)
 
