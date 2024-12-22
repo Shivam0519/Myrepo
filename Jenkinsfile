@@ -3,19 +3,20 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "my-static-website"
+        SELENIUM_IMAGE = "selenium-tests"
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                 git branch: 'main', url: 'https://github.com/Shivam0519/Myrepo.git'
+                git branch: 'main', url: 'https://github.com/Shivam0519/Myrepo.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}", ".")
+                    sh 'docker build -t my-static-website .'
                 }
             }
         }
@@ -23,7 +24,8 @@ pipeline {
         stage('Run Website in Docker') {
             steps {
                 script {
-                    docker.run("${DOCKER_IMAGE}", "-d")  // Run the website in detached mode
+                    // Run the container in detached mode
+                    sh 'docker run -d --name my-static-website-container -p 8080:80 my-static-website'
                 }
             }
         }
@@ -31,27 +33,35 @@ pipeline {
         stage('Run Selenium Tests') {
             steps {
                 script {
-                    // Build the Docker image for Selenium tests
-                    def seleniumContainer = docker.build("selenium-tests", "--target selenium-tests .")
-                    
-                    // Run the Selenium tests
-                    seleniumContainer.run()
+                    // Build and run Selenium tests
+                    sh '''
+                        docker build -t selenium-tests --target selenium-tests .
+                        docker run --rm selenium-tests
+                    '''
                 }
             }
         }
 
         stage('Deploy Website') {
             steps {
-                // Add deployment steps (e.g., pushing to a cloud, server, etc.)
-                echo "Deploying static website..."
+                script {
+                    echo "Website is running on port 8080."
+                    // Add further deployment steps if required
+                }
             }
         }
     }
 
     post {
         always {
-            // Clean up Docker containers after tests
-            sh "docker ps -a -q | xargs docker rm -f"
+            script {
+                // Clean up Docker containers and images
+                sh '''
+                    echo "Cleaning up Docker resources..."
+                    docker ps -a -q | xargs -r docker rm -f
+                    docker images -q | xargs -r docker rmi -f
+                '''
+            }
         }
     }
 }
