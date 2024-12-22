@@ -16,6 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    // Build the Docker image for the website
                     sh 'docker build -t my-static-website .'
                 }
             }
@@ -25,7 +26,15 @@ pipeline {
             steps {
                 script {
                     // Run the container in detached mode
-                    sh 'docker run -d --name my-static-website-container -p 8081:80 my-static-website'
+                    sh '''
+                        docker run -d --name my-static-website-container -p 8081:80 my-static-website
+
+                        # Wait for the container to be ready
+                        until curl -s http://localhost:8081; do
+                            echo "Waiting for website to be up..."
+                            sleep 2
+                        done
+                    '''
                 }
             }
         }
@@ -45,7 +54,7 @@ pipeline {
         stage('Deploy Website') {
             steps {
                 script {
-                    echo "Website is running on port 8080."
+                    echo "Website is running on port 8081."
                     // Add further deployment steps if required
                 }
             }
