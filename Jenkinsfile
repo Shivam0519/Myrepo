@@ -51,18 +51,5 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            script {
-                // Clean up Docker containers and images
-                sh '''
-                    echo "Cleaning up Docker resources..."
-                    docker ps -a -q | xargs -r docker rm -f
-                    docker images -q | xargs -r docker rmi -f
-                '''
-            }
-        }
-    }
 }
 
