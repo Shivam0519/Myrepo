@@ -4,7 +4,7 @@ FROM nginx:alpine AS website
 # Set working directory and copy website files
 WORKDIR /usr/share/nginx/html
 COPY index.html .
-COPY style.css .
+COPY styles.css .
 COPY script.js .
 
 # Expose port 80 for Nginx
