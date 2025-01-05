@@ -23,7 +23,6 @@ pipeline {
         stage('Run Website in Docker') {
             steps {
                 script {
-                    // Run the website container and expose it on port 8081
                     sh '''
                         docker run -d --name my-static-website-container -p 8081:80 my-static-website
 
@@ -41,9 +40,17 @@ pipeline {
             steps {
                 script {
                     echo "Website is running on port 8081."
-                    // Add further deployment steps if required
+                }
+            }
+        }
+
+        stage('Trigger Selenium Tests') {
+            steps {
+                script {
+                    build job: 'Selenium-Tests-Job'
                 }
             }
         }
     }
 }
+
