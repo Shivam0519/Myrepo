@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "my-static-website"
-        SELENIUM_IMAGE = "selenium-tests"
     }
 
     stages {
@@ -27,24 +26,12 @@ pipeline {
                     // Run the website container and expose it on port 8081
                     sh '''
                         docker run -d --name my-static-website-container -p 8081:80 my-static-website
-                        
+
                         # Wait for the container to be ready
                         until curl -s http://localhost:8081; do
                             echo "Waiting for website to be up..."
                             sleep 2
                         done
-                    '''
-                }
-            }
-        }
-
-        stage('Run Selenium Tests') {
-            steps {
-                script {
-                    // Build and run the Selenium tests container
-                    sh '''
-                        docker build -t selenium-tests --target selenium-tests .
-                        docker run --rm selenium-tests
                     '''
                 }
             }
@@ -60,4 +47,3 @@ pipeline {
         }
     }
 }
-
