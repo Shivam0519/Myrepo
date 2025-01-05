@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    environment {
+        SELENIUM_IMAGE = "selenium-tests"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Shivam0519/Myrepo.git'
+            }
+        }
+
+        stage('Build Selenium Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t selenium-tests -f Dockerfile.selenium .'
+                }
+            }
+        }
+
+        stage('Run Selenium Tests') {
+            steps {
+                script {
+                    sh 'docker run --rm --network="host" selenium-tests'
+                }
+            }
+        }
+    }
+}
